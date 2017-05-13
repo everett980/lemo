@@ -22,7 +22,10 @@ export default class GameStart extends Component {
                 <p>`${ this.urlStart }/Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)`</p>
               </div>
           }
-
+          { this.state.leader
+              ? <button className="isLeader" onClick={ () => this.setState({ leader: false }) }>I no longer want to lead</button>
+              : <button className="isFollower" onClick={ () => { if (!this.state.leader) this.setState({ leader: true }) }}>I am the leader!</button>
+          }
         </div>
       </div>
     );
