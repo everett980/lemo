@@ -17,13 +17,13 @@ export default class GameStart extends Component {
         <div className="App-body">
           { this.state.leader && <button onClick={this.props.sendChat}>Start</button> }
           { this.state.leader &&
-              <p>Share this url with your friends!</p>
-              <p>`${ this.urlStart }/Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)`</p>
-          }</div>
-          { this.state.leader
-              ? <button className="isLeader" onClick={ () => this.setState({ leader: false }) }>I no longer want to lead</button>
-              : <button class="isFollower" onClick ={ () => if (!this.state.leader) this.setState({ leader: true }) }>I'm the leader!</button>
+              <div>
+                <p>Share this url with your friends!</p>
+                <p>`${ this.urlStart }/Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)`</p>
+              </div>
           }
+
+        </div>
       </div>
     );
   }
