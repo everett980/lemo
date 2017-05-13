@@ -3,9 +3,11 @@ import logo from './logo.svg';
 import './App.css';
 
 import GameStart from './GameStart/GameStart.js';
+import WebcamWrapper from './Webcam/Webcam.js';
 
 class App extends Component {
   constructor(props) {
+    console.log('app');
     super(props);
     this.socket = io.connect(); // eslint-disable-line
 
@@ -28,6 +30,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <GameStart sendChat={this._sendChat}/>
+        <WebcamWrapper/>
       </div>
     );
   }
