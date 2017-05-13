@@ -6,19 +6,28 @@ export default class WebcamWrapper extends Component {
     super(props);
     this.state = { screenshot: null };
 
+    var divRoot = document.getElementById("webcam");
+    var width = 640;
+    var height = 480;
     var faceMode = affdex.FaceDetectorMode.LARGE_FACES; // eslint-disable-line
-    this.detector = new affdex.PhotoDetector(faceMode); // eslint-disable-line
+    //Construct a CameraDetector and specify the image width / height and face detector mode.
+    this.detector = new affdex.CameraDetector(divRoot, width, height, faceMode); // eslint-disable-line
 
-    this.detector.addEventListener("onInitializeSuccess", function() {});
-    this.detector.addEventListener("onInitializeFailure", function() {});
+    this.detector.addEventListener("onInitializeSuccess", function() {
+      console.log('init success');
+    });
+    this.detector.addEventListener("onInitializeFailure", function() {
+      console.log('init FAILED');
+    });
 
-    this.detector.addEventListener("onImageResultsSuccess",
-      function (faces, image, timestamp) {
-        console.log('it fucking worked')
+    this.detector.addEventListener("onWebcamConnectSuccess",
+      function () {
+        console.log('it fucking worked');
       });
-    this.detector.addEventListener("onImageResultsFailure",
-      function (image, timestamp, err_detail) {
-        console.log('wtf')
+    this.detector.addEventListener("onWebcamConnectFailure",
+      function () {
+        console.log('wtf');
+        console.log(err_detail);
       });
 
     this.detector.detectAllExpressions();
@@ -45,7 +54,8 @@ export default class WebcamWrapper extends Component {
         <div className="App-header">
           <h1>{this.props.word}</h1>
         </div>
-        <Webcam audio={false} ref="webcam"/>
+        {/* <Webcam audio={false} ref="webcam"/> */}
+        <div id="webcam"></div>
         <button onClick={this.processPhoto}>Take Photo</button>
         { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
       </div>
