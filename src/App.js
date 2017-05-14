@@ -31,6 +31,7 @@ class App extends Component {
     this.renderGameHint = this.renderGameHint.bind(this);
     this.renderGamePrompt = this.renderGamePrompt.bind(this);
     this._sendEmotion = this._sendEmotion.bind(this);
+    this.getGiph = this.getGiph.bind(this);
   }
 
   _sendEmotion(data) {
@@ -71,7 +72,7 @@ class App extends Component {
       this._sendEmotion(gifUrl)
       // this.setState({gifUrl: gifUrl })
     })
-    .catch(err=>console.err('fails'))
+    // .catch(err=>console.err('fails'))
   }
 
   render() {

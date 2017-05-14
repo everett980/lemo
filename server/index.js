@@ -54,6 +54,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('submit data', function(message) {
+    console.log('putting this message into results', message)
     resultsArray.push(message);
     // TODO: Process score if not first data point
     currentPlayer++;
