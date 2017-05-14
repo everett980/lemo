@@ -60,7 +60,11 @@ class App extends Component {
 
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      return <p> Try to Make a <img src={this.state.nextPrompt}/> face</p>
+      return
+        (<div className="col-sm-6">
+          <p> Try to Make this face:</p>
+          <img src={this.state.nextPrompt}/>
+        </div>)
     }
   }
 
@@ -86,24 +90,50 @@ class App extends Component {
         { !this.state.endGame &&
           <span>
             <div className="App-header">
-             <h1 className="App-logo">fwhisper</h1>
+              <h1 className="App-logo">fwhisper</h1>
             </div>
             { !this.state.gameStarted && !this.state.waiting && <p className="App-intro">
               to start fwhispering, invite your friends.
             </p> }
             { this.renderGameHint() }
-            { this.renderGamePrompt() }
+
             { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
           </span>
         }
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
 
-        <WebcamWrapper
-          sendEmotion={this._sendEmotion}
-          showClass={this.state.gameStarted}
-          getGiph={this.getGiph}
-          gif={this.state.gifUrl}
-        />
+
+          { this.state.nextPrompt? (
+          <div className="row image-container"><div className="col-xs-12
+            col-sm-6
+            col-md-6
+            col-lg-6">
+            <p> Try to Make this face:</p>
+            <img src={this.state.nextPrompt}/>
+          </div><div className="col-xs-12
+            col-sm-6
+            col-md-6
+            col-lg-6">
+            <WebcamWrapper
+              sendEmotion={this._sendEmotion}
+              showClass={this.state.gameStarted}
+              getGiph={this.getGiph}
+              gif={this.state.gifUrl}
+              />
+          </div>
+        </div>
+        ):(  <div className="row image-container"><div className="col-xs-12
+          col-sm-12
+          col-md-12
+          col-lg-12">
+          <WebcamWrapper
+            sendEmotion={this._sendEmotion}
+            showClass={this.state.gameStarted}
+            getGiph={this.getGiph}
+            gif={this.state.gifUrl}
+            />
+        </div></div> ) }
+
       </div>
     );
   }

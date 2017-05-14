@@ -30,7 +30,9 @@ io.on('connection', function(socket) {
   console.log(playerIds);
 
   function scoreDifference(previousEmotion, currentEmotion) {
-    return Math.min(previousEmotion, currentEmotion) / Math.max(previousEmotion, currentEmotion);
+    let max = Math.max(previousEmotion, currentEmotion);
+    if (!max) max = 1;
+    return Math.min(previousEmotion, currentEmotion) / max;
   }
 
   function nextTurn() {
@@ -66,10 +68,10 @@ io.on('connection', function(socket) {
       primaryEmotion[1] = primaryEmotion[0] === prevPrimaryEmotion[0] ? primaryEmotion[1] : 0;
       secondaryEmotion[1] = secondaryEmotion[0] === prevSecondaryEmotion[0] ? secondaryEmotion[1] : 0;
 
-      score += ((
+      score += (((
         scoreDifference(prevPrimaryEmotion[1], primaryEmotion[1])
         + scoreDifference(prevSecondaryEmotion[1], secondaryEmotion[1])
-      ) / 2).toFixed(2)
+      ) / 2) * 100 );
       console.log(prevPrimaryEmotion.join(' '), prevSecondaryEmotion.join(' '))
       console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
       console.log("SCORE", score);
@@ -92,10 +94,10 @@ io.on('connection', function(socket) {
       originalSecondaryEmotion[1] = originalSecondaryEmotion[0] === finalSecondaryEmotion[0] ? originalSecondaryEmotion[1] : 0;
       console.log('COMPARE', originalPrimaryEmotion.join(' '), originalSecondaryEmotion.join(' '))
       // save first player's score to results
-      resultsArray[0][2] += ((
+      resultsArray[0][2] += (((
         scoreDifference(finalPrimaryEmotion[1], originalPrimaryEmotion[1])
         + scoreDifference(finalSecondaryEmotion[1], originalSecondaryEmotion[1])
-      ) / 2).toFixed(2);
+      ) / 2) * 100);
       console.log(resultsArray[0][2])
 
       // END GAME
