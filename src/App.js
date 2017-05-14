@@ -67,7 +67,7 @@ class App extends Component {
     console.log('hitting the giphy api')
     axios.get(`http://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
     .then(res=>{
-      const gifUrl = res.data.data[0]['bitly_gif_url']
+      const gifUrl = res.data.data[0]['embed_url']
       console.log('gifs', gifUrl)
       this._sendEmotion(gifUrl)
       // this.setState({gifUrl: gifUrl })
