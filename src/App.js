@@ -50,13 +50,13 @@ class App extends Component {
       }
     }
   }
-   
+
   renderGamePrompt() {
     if(this.state.nextPrompt) {
       return <p>Try to Make a face with {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]}</p>
     }
   }
-  
+
   render() {
     return (
       <div className="App container">
