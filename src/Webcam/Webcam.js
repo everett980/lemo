@@ -32,7 +32,7 @@ export default class WebcamWrapper extends Component {
         if (!faces.length) {
           this.setState({
             retake: true,
-            showWebcamBtn: false
+            showWebcamBtn: true
           });
           return;
         }
