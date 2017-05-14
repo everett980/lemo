@@ -12,9 +12,12 @@ class App extends Component {
     this.socket = io.connect(); // eslint-disable-line
     this._sendChat = this._sendChat.bind(this);
     this.state = {
-      numPlayersConnected: 0
+      numPlayersConnected: 0,
+      gameStarted: false
     }
-    this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }))
+    this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
+    this.socket.on('start game', () => this.setState({ gameStarted: true }));
+    this.startGame = this.startGame.bind(this);
   }
 
   _sendChat() {
@@ -22,17 +25,29 @@ class App extends Component {
     this.socket.emit('chat message', 'a message');
   }
 
+  startGame() {
+    this.setState({ gameStarted: true });
+    this.socket.emit('start game', 'start game!');
+    console.log('starting game!');
+  }
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        </div>
-        <p className="App-intro">
-          To start fwhispering, <code>src/App.js</code> and save to reload.
-        </p>
-        <GameStart sendChat={this._sendChat} numPeeps={this.state.numPlayersConnected}/>
-        <WebcamWrapper />
+
+        { !this.state.gameStarted &&
+          <span>
+            <div className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+            </div>
+            <p className="App-intro">
+              To start fwhispering, <code>src/App.js</code> and save to reload.
+            </p>
+            <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
+          </span>
+        }
+
+        { this.state.gameStarted && <WebcamWrapper /> }
       </div>
     );
   }

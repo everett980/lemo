@@ -15,7 +15,7 @@ export default class GameStart extends Component {
           <h1>{this.props.numPeeps} people are here</h1>
         </div>
         <div className="App-body">
-          { this.state.leader && <button onClick={this.props.sendChat}>Start</button> }
+          { this.state.leader && <button onClick={ this.props.startGame }>Start</button> }
           { this.state.leader &&
               <div>
                 <p>Share this url with your friends!</p>

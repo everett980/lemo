@@ -44,6 +44,11 @@ io.on('connection', function(socket) {
   socket.on('connected players ids', function() {
     io.emit(playerIds);
   });
+
+  socket.on('start game', function() {
+    io.emit('start game', 'start game!');
+    io.emit('connected players ids', 'emit them!');
+  })
 });
 
 http.listen(3001, function() {
