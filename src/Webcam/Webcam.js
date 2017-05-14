@@ -59,8 +59,11 @@ export default class WebcamWrapper extends Component {
         console.log(highestTwo);
         //grab gif
         this.props.getGiph(highest)
-        // this.props.sendEmotion([this.state.screenshot, highestTwo]);
+          .then((gifUrl) => {
+            this.props.sendEmotion([this.state.screenshot, highestTwo, gifUrl]);
+          });
       });
+
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
       console.log('image results failure', err_detail);
