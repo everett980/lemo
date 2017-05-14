@@ -68,6 +68,7 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
+    currentPlayer = 0;
     const tempCopy = [];
     while(playerIds.length) {
       tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);
