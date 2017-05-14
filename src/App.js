@@ -53,7 +53,7 @@ class App extends Component {
    
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      return <p> Please milord, try to do {this.state.nextPrompt}</p>
+      return <p> Try to Make a {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]} face</p>
     }
   }
   
@@ -69,7 +69,7 @@ class App extends Component {
               to start fwhispering, invite your friends.
             </p>
             { this.renderGameHint() }
-            <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
+            <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }
         { this.renderGamePrompt() }
