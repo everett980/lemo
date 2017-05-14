@@ -17,7 +17,7 @@ app.get('/', function(req, res, next) {
 
 let numPlayers = 0;
 let playerIds = [];
-const resultsArray = [];
+let resultsArray = [];
 let currentPlayer = 0;
 
 
@@ -34,10 +34,11 @@ io.on('connection', function(socket) {
   }
 
   function nextTurn() {
-    console.log(currentPlayer);
-    console.log(playerIds[currentPlayer]);
     io.to(playerIds[currentPlayer]).emit('start game');
-    if (currentPlayer !== playerIds.length - 1) io.to(playerIds[currentPlayer + 1]).emit('next player');
+    console.log('start game', currentPlayer, playerIds, playerIds[currentPlayer]);
+    if (currentPlayer !== playerIds.length - 1) {
+      io.to(playerIds[currentPlayer]).emit('next player');
+    }
   };
 
   socket.on('disconnect', function() {
@@ -107,12 +108,15 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
+// socket.emit('go to waiting');
+    currentPlayer = 0;
+    resultsArray = [];
     const tempCopy = [];
     while(playerIds.length) {
       tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);
     };
     playerIds = tempCopy;
-    nextTurn();
+    io.to(playerIds[0]).emit('start game');
   })
 
 });

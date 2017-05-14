@@ -15,10 +15,6 @@ export default class GameStart extends Component {
         </div>
         <div className="App-body">
           <button className="start-button" onClick={ this.props.startGame }>Start</button> 
-          <div>
-            <p>Share this url with your friends!</p>
-            <p>{ this.urlStart }/{ Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5) }</p>
-          </div>
         </div>
       </div>
     );
