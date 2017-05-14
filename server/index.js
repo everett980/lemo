@@ -36,9 +36,6 @@ io.on('connection', function(socket) {
   function nextTurn() {
     io.to(playerIds[currentPlayer]).emit('start game');
     console.log('start game', currentPlayer, playerIds, playerIds[currentPlayer]);
-    if (currentPlayer !== playerIds.length - 1) {
-      io.to(playerIds[currentPlayer]).emit('next player');
-    }
   };
 
   socket.on('disconnect', function() {

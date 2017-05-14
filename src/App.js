@@ -20,9 +20,9 @@ class App extends Component {
       nextPrompt: null
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
-    this.socket.on('start game', () => this.setState({ gameStarted: true }));
+    this.socket.on('start game', (prompt) => this.setState({ gameStarted: true, nextPrompt: prompt }));
+    this.socket.on('start game', () => this.setState({ gameStarted: true }, () => console.log('enabling webcam')));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
-    this.socket.on('next prompt', (nextPrompt) => this.setState({ nextPrompt: nextPrompt }))
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
     this.startGame = this.startGame.bind(this);
     this.renderGameHint = this.renderGameHint.bind(this);
@@ -54,7 +54,7 @@ class App extends Component {
    
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      return <p> Please milord, try to do {this.state.nextPrompt}</p>
+      return <p> Try to Make a {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]} face</p>
     }
   }
   
@@ -70,7 +70,7 @@ class App extends Component {
               to start fwhispering, invite your friends.
             </p>
             { this.renderGameHint() }
-            <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
+            <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }
         { this.renderGamePrompt() }

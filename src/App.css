@@ -1,19 +1,16 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   font-family: 'Megrim', cursive;
   font-size: calc(max(5em, 10vh));
 
 }
-
 .App-header {
   height: 10vh;
   padding: 5vh;
   margin-bottom: 10vh;
 }
-
 .App-intro {
   font-size: calc(max(2em, 4vh));
 }
@@ -22,7 +19,6 @@ body {
   background-color: #222;
   color: white;
 }
-
 p {
   font-family: 'Abel', sans-serif;
   font-size: calc(max(1.5em, 3vh));
