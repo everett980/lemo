@@ -14,7 +14,7 @@ export default class GameStart extends Component {
           <p>{ this.props.numPeeps += this.props.numPeeps === 1 ? ' person is here' : ' people are here' }</p>
         </div>
         <div className="App-body">
-          {!this.props.gameStarted && <button className="start-button" onClick={ this.props.startGame }>Start</button>}
+          {!this.props.gameStarted && <button className="btn waves-effect waves-indigo" onClick={ this.props.startGame }>Start</button>}a
         </div>
       </div>
     );

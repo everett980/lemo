@@ -68,9 +68,9 @@ io.on('connection', function(socket) {
         scoreDifference(prevPrimaryEmotion[1], primaryEmotion[1])
         + scoreDifference(prevSecondaryEmotion[1], secondaryEmotion[1])
       ) / 2).toFixed(2)
-    console.log(prevPrimaryEmotion.join(' '), prevSecondaryEmotion.join(' '))
-    console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
-    console.log("SCORE", score);
+      console.log(prevPrimaryEmotion.join(' '), prevSecondaryEmotion.join(' '))
+      console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
+      console.log("SCORE", score);
     }
     resultsArray.push([ image, [primaryEmotion, secondaryEmotion], score]);
 
