@@ -66,7 +66,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
-//    socket.emit('go to waiting');
     currentPlayer = 0;
     resultsArray = [];
     const tempCopy = [];

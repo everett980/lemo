@@ -21,6 +21,7 @@ class App extends Component {
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', (prompt) => this.setState({ gameStarted: true, nextPrompt: prompt }));
+    this.socket.on('start game', () => this.setState({ gameStarted: true }, () => console.log('enabling webcam')));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
     this.startGame = this.startGame.bind(this);
