@@ -19,22 +19,26 @@ let numPlayers = 0;
 
 
 io.on('connection', function(socket) {
-  console.log('a user connected');
   ++numPlayers;
+  console.log('a user connected');
+  console.log('numPlayers:', numPlayers);
   io.emit('numPlayersConnected', numPlayers);
-  console.log(numPlayers);
 
   socket.on('disconnect', function() {
-    console.log('a user disconnected');
     --numPlayers;
+    console.log('a user disconnected');
+    console.log('numPlayers:', numPlayers);
     io.emit('numPlayersConnected', numPlayers);
-    console.log(numPlayers);
   });
 
   socket.on('chat message', function(message) {
     console.log(message);
     io.emit('chat message', message);
   });
+
+  socket.on('connected players', function( {
+    
+  }));
 });
 
 http.listen(3001, function() {
