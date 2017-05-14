@@ -30,6 +30,7 @@ io.on('connection', function(socket) {
   console.log(playerIds);
 
   function scoreDifference(previousEmotion, currentEmotion) {
+    console.log( Math.min(previousEmotion, currentEmotion), Math.max(previousEmotion, currentEmotion))
     return Math.min(previousEmotion, currentEmotion) / Math.max(previousEmotion, currentEmotion);
   }
 

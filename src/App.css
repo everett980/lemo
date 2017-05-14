@@ -31,7 +31,7 @@ p {
   color:  black;
   font-family: 'Megrim', cursive;
 }
-.btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
+.btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus {
   background-color: black;
   color:  white;
 }

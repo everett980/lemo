@@ -27,6 +27,19 @@ class GameSummary extends Component {
           </div>
         </div>
         <div className="row">
+        <ul className="collection">
+          { this.props.resultsArr.sort().reverse().map(([imgUri, _, score], idx ) => (
+            <li className="collection-item avatar">
+              <img src={imgUri} className="circle" />
+              <span className="title">{ idx === 1 ? "1st" : idx === 2 ? "2nd" : idx === 3 ? "3rd" : idx + "th" }</span>
+              <p>{ score }</p>
+              <a className="secondary-content"><i className="material-icons">grade</i></a>
+            </li>
+            ))
+          }
+        </ul>
+        </div>
+        <div className="row">
           <div className="col s12">
             <button className="btn waves-effect waves-indigo" onClick={ this.restartGame }>again?</button> 
           </div>
