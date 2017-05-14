@@ -17,7 +17,7 @@ app.get('/', function(req, res, next) {
 
 let numPlayers = 0;
 let playerIds = [];
-const resultsArray = [];
+let resultsArray = [];
 let currentPlayer = 0;
 
 
@@ -58,6 +58,7 @@ io.on('connection', function(socket) {
     currentPlayer++;
     resultsArray.push(message);
     // TODO: Process score if not first data point
+    socket.emit('go to waiting');
     console.log(resultsArray.length, playerIds);
     if (resultsArray.length === playerIds.length) {
       // TODO: Calculate first person's score
@@ -68,7 +69,9 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
+    socket.emit('go to waiting');
     currentPlayer = 0;
+    resultsArray = [];
     const tempCopy = [];
     while(playerIds.length) {
       tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);

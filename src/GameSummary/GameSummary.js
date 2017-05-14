@@ -17,7 +17,7 @@ class GameSummary extends Component {
     return (
       <div className="App">
         <div> 
-          The gyame has Ended. Press Start to Start Again
+          The game has Ended. Press Start to Start Again
           <button onClick={ this.restartGame }>Start</button> 
           {images}
         </div> 
