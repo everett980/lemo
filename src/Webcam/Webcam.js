@@ -30,11 +30,14 @@ export default class WebcamWrapper extends Component {
         const screenshotCanvas = document.getElementById('screenshot-canvas');
         screenshotCanvas.getContext("2d").putImageData(this.state.image, 0, 0);
         if (!faces.length) {
-          this.setState({ retake: true });
+          this.setState({
+            retake: true,
+            showWebcamBtn: false
+          });
           return;
         }
         const { emotions } = faces[0];
-        console.log(emotions);
+        console.log('FACESdatadatadata', faces );
         let highest;
         let second;
         Object.keys(emotions).forEach(emotion => {
@@ -54,8 +57,13 @@ export default class WebcamWrapper extends Component {
           [ second, emotions[second] ]
         ];
         console.log(highestTwo);
-        this.props.sendEmotion([this.state.screenshot, highestTwo]);
+        //grab gif
+        this.props.getGiph(highest)
+          .then((gifUrl) => {
+            this.props.sendEmotion([this.state.screenshot, highestTwo, gifUrl]);
+          });
       });
+
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
       console.log('image results failure', err_detail);
@@ -96,7 +104,8 @@ export default class WebcamWrapper extends Component {
     img.src = image;
 
     this.setState({
-      screenshot: image
+      screenshot: image,
+      showWebcamBtn: false
     });
   }
 
@@ -110,9 +119,12 @@ export default class WebcamWrapper extends Component {
         <div className="webcam-area">
           { this.state.retake && <h1>No face found, please retake!</h1> }
           <Webcam audio={false} ref="webcam"/>
-          { this.state.showWebcamBtn && <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> }
+          { this.state.showWebcamBtn ? <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> : <p>Processing...</p>}
         </div>
         <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
+        {
+          // this.props.gif? <img src={this.props.gif}/> : null
+        }
       </div>
     );
   }
