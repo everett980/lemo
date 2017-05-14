@@ -113,9 +113,6 @@ export default class WebcamWrapper extends Component {
     console.log('webcam');
     return (
       <div className={`App show-${this.props.showClass}`}>
-        <div className="App-header">
-          <h1>{this.props.word}</h1>
-        </div>
         <div className="webcam-area">
           { this.state.retake && <h1>No face found, please retake!</h1> }
           <Webcam audio={false} ref="webcam"/>
