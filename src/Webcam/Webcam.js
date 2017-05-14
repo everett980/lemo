@@ -4,20 +4,36 @@ import Webcam from 'react-webcam';
 export default class WebcamWrapper extends Component {
   constructor(props) {
     super(props);
-    this.state = { screenshot: null };
+    this.state = { screenshot: null, showWebcam: false };
 
     var divRoot = document.getElementById("webcam");
-    var width = 640;
-    var height = 480;
     var faceMode = affdex.FaceDetectorMode.LARGE_FACES; // eslint-disable-line
-    //Construct a CameraDetector and specify the image width / height and face detector mode.
-    this.detector = new affdex.CameraDetector(divRoot, width, height, faceMode); // eslint-disable-line
+    this.detector = new affdex.PhotoDetector(faceMode);  // eslint-disable-line
 
-    this.detector.addEventListener("onInitializeSuccess", function() {
+    this.detector.addEventListener("onInitializeSuccess", () => {
       console.log('init success');
+      this.setState({
+        showWebcam: true
+      });
     });
     this.detector.addEventListener("onInitializeFailure", function() {
-      console.log('init FAILED');
+      console.log('init failed')
+    });
+
+    this.detector.addEventListener("onImageResultsSuccess", (faces, image, timestamp) => {
+      console.log('image results success', faces, image, timestamp);
+      this.setState({
+        faces,
+        image,
+        timestamp
+      }, function() {
+        var canvas = document.getElementById('new-id');
+        var newCtx = canvas.getContext("2d");
+        newCtx.putImageData(this.state.image, 0, 0);
+      });
+    });
+    this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
+      console.log('image results failure', err_detail);
     });
 
     this.detector.addEventListener("onWebcamConnectSuccess",
@@ -42,9 +58,14 @@ export default class WebcamWrapper extends Component {
     const image = this.refs.webcam.getScreenshot();
     this.setState({
       screenshot: image
+    }, () => {
+      console.log(this.state);
+      var canvas = document.getElementById('screenshot-canvas');
+      var ctx = canvas.getContext("2d");
+      var imageDataWeHope = ctx.getImageData(0, 0, 640, 480);
+      console.log('image data we\'re sending', imageDataWeHope);
+      this.detector.process(imageDataWeHope, 0);
     });
-    console.log(this.state);
-    this.detector.process(image);
   }
 
   render() {
@@ -54,10 +75,20 @@ export default class WebcamWrapper extends Component {
         <div className="App-header">
           <h1>{this.props.word}</h1>
         </div>
-        <Webcam audio={false} ref="webcam"/>
-        <div id="webcam"></div>
-        <button onClick={this.processPhoto}>Take Photo</button>
-        { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
+        {this.state.showWebcam ?
+          (<div className="webcam-area">
+            <Webcam audio={false} ref="webcam"/>
+          <button onClick={this.processPhoto}>Take Photo</button>
+          </div>)
+         : "Loading webcam..." }
+         <canvas id="screenshot-canvas">
+           { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
+         </canvas>
+         <h1>FROM THE STATE!!!!</h1>
+         { this.state.image ?
+           <canvas id="new-id">
+
+           </canvas> : null }
       </div>
     );
   }
