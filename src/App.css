@@ -3,7 +3,7 @@
 }
 .App-logo {
   font-family: 'Megrim', cursive;
-  font-size: calc(max(5em, 10vh));
+  font-size: 10vh;
 
 }
 .App-header {
@@ -12,19 +12,26 @@
   margin-bottom: 10vh;
 }
 .App-intro {
-  font-size: calc(max(2em, 4vh));
+  font-size: 4vh;
 }
 
 body {
   background-color: #222;
   color: white;
+  margin: 0;
+  padding: 0;
 }
 p {
   font-family: 'Abel', sans-serif;
-  font-size: calc(max(1.5em, 3vh));
+  font-size: 3vh;
 }
 
-.btn:hover, .btn-large:hover {
+.btn, .btn-large {
+  background-color: white;
+  color:  black;
+  font-family: 'Megrim', cursive;
+}
+.btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
   background-color: black;
   color:  white;
 }
@@ -32,7 +39,7 @@ p {
   background-color: white;
   color:  black;
 }
-.waves-effect.waves-indigo {
+.waves-effect.waves-indigo .waves-ripple {
   background-color: #1a237e;
   color:  white;
 }

@@ -75,7 +75,7 @@ class App extends Component {
           { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
         </span>
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
-        <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} /> 
+        <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} />
       </div>
     );
   }
