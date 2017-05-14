@@ -4,6 +4,8 @@
 
 .App-logo {
   font-family: 'Megrim', cursive;
+  font-size: calc(max(5em, 10vh));
+
 }
 
 .App-header {
@@ -13,7 +15,7 @@
 }
 
 .App-intro {
-  font-size: large;
+  font-size: calc(max(2em, 4vh));
 }
 
 body {
@@ -23,4 +25,18 @@ body {
 
 p {
   font-family: 'Abel', sans-serif;
+  font-size: calc(max(1.5em, 3vh));
+}
+
+.btn:hover, .btn-large:hover {
+  background-color: black;
+  color:  white;
+}
+.waves-effect {
+  background-color: white;
+  color:  black;
+}
+.waves-effect.waves-indigo {
+  background-color: #1a237e;
+  color:  white;
 }
