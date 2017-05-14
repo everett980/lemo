@@ -37,6 +37,7 @@ class GameSummary extends Component {
             <div className="App-intro">fwhisper story</div>
           </div>
         </div>
+        <br /><br />
         <div className="row">
           <div className="col s12">
             {images}
