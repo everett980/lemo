@@ -111,7 +111,7 @@ export default class WebcamWrapper extends Component {
           { this.state.retake && <h1>No face found, please retake!</h1> }
           <Webcam audio={false} ref="webcam"/>
           <div className="button_w">
-            <button className={`photo-button btn-disabled-${!this.state.showWebcamBtn}`} id="take-photo" onClick={this.processPhoto}>{this.state.showWebcamBtn ? 'Take Photo' : 'Systems Initializing'</button>
+            <button className={`photo-button btn-disabled-${!this.state.showWebcamBtn}`} onClick={this.processPhoto}>{this.state.showWebcamBtn ? 'Take Photo' : 'Systems Initializing'}</button>
           </div>
         </div>
         <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
