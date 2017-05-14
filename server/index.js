@@ -1,4 +1,4 @@
-var express= require('express')
+var express = require('express')
 var app = express();
 var path = require('path');
 
@@ -15,12 +15,22 @@ app.get('/', function(req, res, next) {
   res.sendFile(path.normalize(__dirname+'/../build/index.html'));
 });
 
+let numPlayers = 0;
+
 
 io.on('connection', function(socket) {
   console.log('a user connected');
+  ++numPlayers;
+  io.emit('numPlayersConnected', numPlayers);
+  console.log(numPlayers);
+
   socket.on('disconnect', function() {
     console.log('a user disconnected');
+    --numPlayers;
+    io.emit('numPlayersConnected', numPlayers);
+    console.log(numPlayers);
   });
+
   socket.on('chat message', function(message) {
     console.log(message);
     io.emit('chat message', message);
