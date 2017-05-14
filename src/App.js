@@ -39,14 +39,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         { !this.state.gameStarted &&
           <span>
             <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
+             <h1 className="App-logo">fwhisper</h1>
             </div>
             <p className="App-intro">
-              To start fwhispering, <code>src/App.js</code> and save to reload.
+              to start fwhispering, invite your friends.
             </p>
             <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
