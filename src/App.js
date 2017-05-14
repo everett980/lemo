@@ -75,7 +75,7 @@ class App extends Component {
         }
         { this.renderGamePrompt() }
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
-        <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} /> 
+        <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} />
       </div>
     );
   }
