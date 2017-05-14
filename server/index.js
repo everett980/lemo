@@ -73,7 +73,7 @@ io.on('connection', function(socket) {
       tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);
     };
     playerIds = tempCopy;
-    nextTurn();
+    io.to(playerIds[0]).emit('start game');
   })
 
 });
