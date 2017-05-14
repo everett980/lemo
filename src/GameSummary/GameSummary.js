@@ -14,9 +14,7 @@ class GameSummary extends Component {
     console.log(this.props.resultsArr);
     const images = this.props.resultsArr.map(([imgUri, emotions, score, gifUrl]) => <div>
       <img src={imgUri} />
-      <span>Emotions: {emotions[0][0]}{emotions[1][0]}</span>
       <img src={gifUrl} />
-      <span>Score: {score}</span>
     </div>
     );
     return (
@@ -32,13 +30,12 @@ class GameSummary extends Component {
           </div>
         </div>
         <div className="row">
-        <ul className="collection">
+        <ul className="collection colored">
           { this.props.resultsArr.sort().reverse().map(([imgUri, _, score], idx ) => (
             <li className="collection-item avatar">
               <img src={imgUri} className="circle" />
-              <span className="title">{ idx === 1 ? "1st" : idx === 2 ? "2nd" : idx === 3 ? "3rd" : idx + "th" }</span>
-              <p>{ score }</p>
-              <a className="secondary-content"><i className="material-icons">grade</i></a>
+              <span className="title">{ idx + 1 === 1 ? "1st" : idx + 1 === 2 ? "2nd" : idx + 1 === 3 ? "3rd" : idx + 1 + "th" }</span>
+              <p colored>{ score }%</p>
             </li>
             ))
           }
