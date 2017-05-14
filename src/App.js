@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios'
+
 import logo from './logo.svg';
 import './App.css';
 
@@ -17,7 +19,8 @@ class App extends Component {
       gameStarted: false,
       endGame: false,
       resultsArr: null,
-      nextPrompt: null
+      nextPrompt: null,
+      gifUrl: null
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', (prompt) => this.setState({ gameStarted: true, nextPrompt: prompt }));
@@ -28,6 +31,7 @@ class App extends Component {
     this.renderGameHint = this.renderGameHint.bind(this);
     this.renderGamePrompt = this.renderGamePrompt.bind(this);
     this._sendEmotion = this._sendEmotion.bind(this);
+    this.getGiph = this.getGiph.bind(this);
   }
 
   _sendEmotion(data) {
@@ -56,8 +60,21 @@ class App extends Component {
 
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      return <p>Try to Make a face with {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]}</p>
+      // return <p> Try to Make a {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]} face</p>
+      return <p> Try to Make a <img src={this.state.nextPrompt}/> face</p>
     }
+  }
+
+  getGiph (emotion) {
+    console.log('hitting the giphy api')
+    axios.get(`http://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
+    .then(res=>{
+      const gifUrl = res.data.data[0]['images']['fixed_height']['url']
+      console.log('gifs', gifUrl)
+      this._sendEmotion(gifUrl)
+      // this.setState({gifUrl: gifUrl })
+    })
+    // .catch(err=>console.err('fails'))
   }
 
   render() {
@@ -75,7 +92,13 @@ class App extends Component {
           { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
         </span>
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
-        <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} />
+
+        <WebcamWrapper
+          sendEmotion={this._sendEmotion}
+          showClass={this.state.gameStarted}
+          getGiph={this.getGiph}
+          gif={this.state.gifUrl}
+        />
       </div>
     );
   }

@@ -37,7 +37,7 @@ export default class WebcamWrapper extends Component {
           return;
         }
         const { emotions } = faces[0];
-        console.log(emotions);
+        console.log('FACESdatadatadata', faces );
         let highest;
         let second;
         Object.keys(emotions).forEach(emotion => {
@@ -57,7 +57,9 @@ export default class WebcamWrapper extends Component {
           [ second, emotions[second] ]
         ];
         console.log(highestTwo);
-        this.props.sendEmotion([this.state.screenshot, highestTwo]);
+        //grab gif
+        this.props.getGiph(highest)
+        // this.props.sendEmotion([this.state.screenshot, highestTwo]);
       });
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
@@ -117,6 +119,9 @@ export default class WebcamWrapper extends Component {
           { this.state.showWebcamBtn ? <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> : <p>Processing...</p>}
         </div>
         <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
+        {
+          // this.props.gif? <img src={this.props.gif}/> : null
+        }
       </div>
     );
   }
