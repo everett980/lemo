@@ -65,9 +65,10 @@ p#status {
   background-color: white;
   color:  black;
   font-family: 'Megrim', cursive;
+  width: 640px;
 }
 
-.btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
+.btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus {
   background-color: black;
   color:  white;
 }
@@ -79,7 +80,16 @@ p#status {
   background-color: #1a237e;
   color:  white;
 }
-
 .webcam-area {
   margin: 15px 0;
 }
+
+canvas {
+  width: 100%;
+}
+
+.colored {
+  max-width: 30vw;
+  color:  black;
+}
+
