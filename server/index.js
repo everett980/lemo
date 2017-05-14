@@ -35,7 +35,7 @@ io.on('connection', function(socket) {
 
   function nextTurn() {
     console.log('NEXT TURNNNNNNN')
-    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][3]);
+    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1]);
     if(currentPlayer + 1 < playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player')
     socket.emit('wait');
   };
@@ -53,8 +53,13 @@ io.on('connection', function(socket) {
     io.emit(playerIds);
   });
 
-  // [ { data: [Object] }, [ [surprise, 11.449400901794434],  [sadness: 2.9407808780670166] ] ],
-  socket.on('submit data', function([ image, [primaryEmotion, secondaryEmotion], gifUrl ]) {
+  // [
+  //   { data: [Object] },
+  //   [ [surprise, 11.449400901794434],
+  //     [sadness: 2.9407808780670166] ],
+  //   'http://giphy.com/gifs/american-psycho-christian-bale-Ggjwvmqktuvf2'
+  // ]
+  socket.on('submit data', function([ image, [primaryEmotion, secondaryEmotion] ]) {
     let score = 0;
 
     // CALCULATE SCORE FOR PLAYERS OTHER THAN FIRST PLAYER
@@ -74,7 +79,7 @@ io.on('connection', function(socket) {
       console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
       console.log("SCORE", score);
     }
-    resultsArray.push([ image, [primaryEmotion, secondaryEmotion], score, gifUrl]);
+    resultsArray.push([ image, [primaryEmotion, secondaryEmotion], score]);
 
     // increment turn number
     currentPlayer++;

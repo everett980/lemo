@@ -82,17 +82,19 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        <span>
-          <div className="App-header">
-           <h1 className="App-logo">fwhisper</h1>
-          </div>
-          { !this.state.waiting && <p className="App-intro">
-            to start fwhispering, invite your friends.
-          </p> }
-          { this.renderGameHint() }
-          { this.renderGamePrompt() }
-          { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
-        </span>
+        { !this.state.gameStarted && !this.state.endGame &&
+          <span>
+            <div className="App-header">
+             <h1 className="App-logo">fwhisper</h1>
+            </div>
+            { !this.state.waiting && <p className="App-intro">
+              to start fwhispering, invite your friends.
+            </p> }
+            { this.renderGameHint() }
+            { this.renderGamePrompt() }
+            { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
+          </span>
+        }
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
 
         <WebcamWrapper
