@@ -16,7 +16,7 @@
 }
 
 body {
-  background-color: #222;
+  background-color: #352E5C;
   color: white;
   margin: 0;
   padding: 0;
@@ -24,6 +24,9 @@ body {
 p {
   font-family: 'Abel', sans-serif;
   font-size: 3vh;
+}
+p#status {
+  color: #EFE1E1;
 }
 
 .btn, .btn-large {
@@ -42,4 +45,8 @@ p {
 .waves-effect.waves-indigo .waves-ripple {
   background-color: #1a237e;
   color:  white;
+}
+
+.current-status {
+
 }

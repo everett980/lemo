@@ -47,7 +47,7 @@ class App extends Component {
   renderGameHint() {
     if(!this.state.endGame) {
       if (this.state.nextPlayer) {
-        return <p>you're next</p>
+        return <p>you're next</p>)
       } else if (this.state.waiting) {
         return <p>waiting for current player</p>
       } else if (!this.state.gameStarted) {
