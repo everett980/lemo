@@ -34,8 +34,7 @@ io.on('connection', function(socket) {
   }
 
   function nextTurn() {
-    console.log('NEXT TURNNNNNNN')
-    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1]);
+    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][1]);
     if(currentPlayer + 1 < playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player')
     socket.emit('wait');
   };
