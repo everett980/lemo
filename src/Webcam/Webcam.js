@@ -4,7 +4,7 @@ import Webcam from 'react-webcam';
 export default class WebcamWrapper extends Component {
   constructor(props) {
     super(props);
-    this.state = { screenshot: null, showWebcam: false };
+    this.state = { screenshot: null, showWebcam: true };
 
     var divRoot = document.getElementById("webcam");
     var faceMode = affdex.FaceDetectorMode.LARGE_FACES; // eslint-disable-line
@@ -109,7 +109,7 @@ export default class WebcamWrapper extends Component {
   render() {
     console.log('webcam');
     return (
-      <div className="App">
+      <div className={`App show-${this.props.showClass}`}>
         <div className="App-header">
           <h1>{this.props.word}</h1>
         </div>

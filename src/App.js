@@ -40,7 +40,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         { !this.state.gameStarted &&
           <span>
             <div className="App-header">
@@ -52,8 +51,7 @@ class App extends Component {
             <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }
-
-        { this.state.gameStarted && <WebcamWrapper sendEmotion={this._sendEmotion} /> }
+        <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} /> 
       </div>
     );
   }

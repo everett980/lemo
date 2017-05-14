@@ -76,6 +76,10 @@ io.on('connection', function(socket) {
     playerIds = tempCopy;
     tellNext();
   })
+  
+  socket.on('game over', function () {
+    console.log("Game just ended")
+  })
 });
 
 http.listen(3001, function() {
