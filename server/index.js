@@ -34,8 +34,9 @@ io.on('connection', function(socket) {
   }
 
   function nextTurn() {
-    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][1]);  
+    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][1]);
     if(currentPlayer + 1 < playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player')
+    socket.emit('wait');
   };
 
   socket.on('disconnect', function() {
@@ -113,6 +114,11 @@ io.on('connection', function(socket) {
     };
     playerIds = tempCopy;
     io.to(playerIds[0]).emit('start game');
+    playerIds.forEach((id, index) => {
+      if(index) {
+        io.to(id).emit('wait');
+      }
+    });
   })
 
 });

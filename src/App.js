@@ -21,6 +21,7 @@ class App extends Component {
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', (prompt) => this.setState({ gameStarted: true, nextPrompt: prompt }));
+    this.socket.on('wait', () => this.setState({ waiting: true }));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
     this.startGame = this.startGame.bind(this);
@@ -43,6 +44,8 @@ class App extends Component {
     if(!this.state.endGame) {
       if (this.state.nextPlayer) {
         return <p>you're next</p>
+      } else if (this.state.waiting) {
+        return <p>waiting for current player</p>
       } else if (!this.state.gameStarted) {
         return <p>waiting to start</p>
       } else {
@@ -60,19 +63,17 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        { !this.state.gameStarted && !this.state.endGame &&
-          <span>
-            <div className="App-header">
-             <h1 className="App-logo">fwhisper</h1>
-            </div>
-            <p className="App-intro">
-              to start fwhispering, invite your friends.
-            </p>
-            { this.renderGameHint() }
-            { this.renderGamePrompt() }
-            <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
-          </span>
-        }
+        <span>
+          <div className="App-header">
+           <h1 className="App-logo">fwhisper</h1>
+          </div>
+          { !this.state.waiting && <p className="App-intro">
+            to start fwhispering, invite your friends.
+          </p> }
+          { this.renderGameHint() }
+          { this.renderGamePrompt() }
+          { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
+        </span>
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
         <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} />
       </div>
