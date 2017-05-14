@@ -26,12 +26,12 @@ p {
   font-size: 3vh;
 }
 
-.btn {
+.btn, .btn-large {
   background-color: white;
   color:  black;
   font-family: 'Megrim', cursive;
 }
-.btn:hover, .btn-large:hover {
+.btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
   background-color: black;
   color:  white;
 }
