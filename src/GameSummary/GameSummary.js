@@ -52,7 +52,11 @@ class GameSummary extends Component {
        <div className="row">
           <div className="col s8 offset-s2">
               <ul className="collection colored">
-               { this.props.resultsArr.sort().reverse().map(([imgUri, _, score], idx ) => (
+               { this.props.resultsArr.sort((current, next) => {
+                  if (current[2] > next[2]) return -1;
+                  if (current[2] < next[2]) return 1;
+                  return 0;
+               }).map(([imgUri, _, score], idx ) => (
                  <li className="collection-item avatar">
                    <img src={imgUri} className="circle" />
                    <span className="title">{ idx + 1 === 1 ? "1st" : idx + 1 === 2 ? "2nd" : idx + 1 === 3 ? "3rd" : idx + 1 + "th" }</span>
