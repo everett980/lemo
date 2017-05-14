@@ -64,6 +64,9 @@ io.on('connection', function(socket) {
       // get previous player's data
       const [ prevImage, [prevPrimaryEmotion, prevSecondaryEmotion], prevScore ] = resultsArray[currentPlayer - 1];
 
+      // in case the priorities are in different order switch them
+      if (primaryEmotion[0] === prevSecondaryEmotion[0]) [primaryEmotion, secondaryEmotion] = [secondaryEmotion, primaryEmotion];
+      else if (secondaryEmotion[0] === prevPrimaryEmotion[0]) [primaryEmotion, secondaryEmotion] = [secondaryEmotion, secondaryEmotion];
       // check if current emotions match previous emotions
       primaryEmotion[1] = primaryEmotion[0] === prevPrimaryEmotion[0] ? primaryEmotion[1] : 0;
       secondaryEmotion[1] = secondaryEmotion[0] === prevSecondaryEmotion[0] ? secondaryEmotion[1] : 0;
@@ -85,10 +88,13 @@ io.on('connection', function(socket) {
     if (resultsArray.length === playerIds.length) {
       // CALCULATE FIRST PLAYER'S SCORE
       // grab first and final players' data
-      const [ originalImage, [originalPrimaryEmotion, originalSecondaryEmotion], originalScore ] = resultsArray[0];
-      const [ finalImage, [finalPrimaryEmotion, finalSecondaryEmotion], finalScore ] = resultsArray[resultsArray.length - 1];
+      let [ originalImage, [originalPrimaryEmotion, originalSecondaryEmotion], originalScore ] = resultsArray[0];
+      let [ finalImage, [finalPrimaryEmotion, finalSecondaryEmotion], finalScore ] = resultsArray[resultsArray.length - 1];
       console.log('FINAL EMOTES', originalPrimaryEmotion.join(' '), originalSecondaryEmotion.join(' '));
       console.log('SECONDARY', finalPrimaryEmotion.join(' '), finalSecondaryEmotion.join(' '))
+      // in case the priorities are in different order switch them
+      if (originalPrimaryEmotion[0] === finalSecondaryEmotion[0]) [originalPrimaryEmotion, originalSecondaryEmotion] = [originalSecondaryEmotion, originalPrimaryEmotion];
+      else if (originalSecondaryEmotion[0] === finalPrimaryEmotion[0]) [originalPrimaryEmotion, originalSecondaryEmotion] = [originalSecondaryEmotion, originalPrimaryEmotion];
       // check if final emotions match original emotions
       originalPrimaryEmotion[1] = originalPrimaryEmotion[0] === finalPrimaryEmotion[0] ? originalPrimaryEmotion[1] : 0;
       originalSecondaryEmotion[1] = originalSecondaryEmotion[0] === finalSecondaryEmotion[0] ? originalSecondaryEmotion[1] : 0;
