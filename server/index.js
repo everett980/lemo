@@ -29,7 +29,7 @@ io.on('connection', function(socket) {
   console.log('numPlayers:', numPlayers);
   console.log(playerIds);
 
-  function tellNext() {
+  function nextTurn() {
     console.log(currentPlayer);
     console.log(playerIds[currentPlayer]);
     io.to(playerIds[currentPlayer]).emit('start game');
@@ -63,7 +63,7 @@ io.on('connection', function(socket) {
       // TODO: Calculate first person's score
       io.emit('game over', resultsArray);
     } else {
-      tellNext();
+      nextTurn();
     }
   });
 
@@ -73,7 +73,7 @@ io.on('connection', function(socket) {
       tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);
     };
     playerIds = tempCopy;
-    tellNext();
+    nextTurn();
   })
 
 });

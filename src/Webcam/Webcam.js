@@ -4,7 +4,7 @@ import Webcam from 'react-webcam';
 export default class WebcamWrapper extends Component {
   constructor(props) {
     super(props);
-    this.state = { screenshot: null, showWebcam: true };
+    this.state = { screenshot: null, showWebcamBtn : false};
 
     var divRoot = document.getElementById("webcam");
     var faceMode = affdex.FaceDetectorMode.LARGE_FACES; // eslint-disable-line
@@ -12,10 +12,9 @@ export default class WebcamWrapper extends Component {
 
     this.detector.addEventListener("onInitializeSuccess", () => {
       console.log('init success');
-      this.setState({
-        showWebcam: true
-      });
+      this.setState({showWebcamBtn: true})
     });
+    
     this.detector.addEventListener("onInitializeFailure", function() {
       console.log('init failed')
     });
@@ -86,11 +85,6 @@ export default class WebcamWrapper extends Component {
     canvas.height = 480;
     canvas.width = 640;
     var context = canvas.getContext('2d');
-    // var img = document.getElementById('someImageId');
-    // context.drawImage(img, 0, 0 );
-    // var theData = context.getImageData(0, 0, img.width, img.height);
-    // this.detector.process(theData, 0);
-
     var img = new Image;
     img.onload = () => {
       console.log('inside img.onload', img.width, img.height);
@@ -113,15 +107,14 @@ export default class WebcamWrapper extends Component {
         <div className="App-header">
           <h1>{this.props.word}</h1>
         </div>
-        {this.state.showWebcam ?
-          (<div className="webcam-area">
-            { this.state.retake && <h1>No face found, please retake!</h1> }
-            <Webcam audio={false} ref="webcam"/>
-          <button onClick={this.processPhoto}>Take Photo</button>
-          </div>)
-         : "Loading webcam..." }
-         <canvas className="show-false" id="screenshot-canvas" height="480" width="640">
-         </canvas>
+        <div className="webcam-area">
+          { this.state.retake && <h1>No face found, please retake!</h1> }
+          <Webcam audio={false} ref="webcam"/>
+          <div className="button_w">
+            <button className={`photo-button btn-disabled-${!this.state.showWebcamBtn}`} id="take-photo" onClick={this.processPhoto}>{this.state.showWebcamBtn ? 'Take Photo' : 'Systems Initializing'</button>
+          </div>
+        </div>
+        <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
       </div>
     );
   }
