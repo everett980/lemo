@@ -32,7 +32,8 @@ io.on('connection', function(socket) {
   function tellNext() {
     console.log(currentPlayer);
     console.log(playerIds[currentPlayer]);
-    io.to(playerIds[currentPlayer]).emit('start game', 'start game!');
+    io.to(playerIds[currentPlayer]).emit('start game');
+    if (currentPlayer !== playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player');
   };
 
   socket.on('disconnect', function() {
@@ -67,8 +68,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
-    // io.emit('start game', 'start game!');
-    // io.emit('connected players ids', 'emit them!');
     const tempCopy = [];
     while(playerIds.length) {
       tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);
@@ -76,10 +75,7 @@ io.on('connection', function(socket) {
     playerIds = tempCopy;
     tellNext();
   })
-  
-  socket.on('game over', function () {
-    console.log("Game just ended")
-  })
+
 });
 
 http.listen(3001, function() {

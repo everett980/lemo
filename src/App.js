@@ -13,11 +13,16 @@ class App extends Component {
     this._sendChat = this._sendChat.bind(this);
     this.state = {
       numPlayersConnected: 0,
-      gameStarted: false
+      nextPlayer: false,
+      gameStarted: false,
+      endGame: false
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', () => this.setState({ gameStarted: true }));
+    this.socket.on('next player', () => this.setState({ nextPlayer: true }));
+    this.socket.on('game over', () => this.setState({ endGame: true }));
     this.startGame = this.startGame.bind(this);
+    this.restartGame = this.restartGame.bind(this);
     this._sendEmotion = this._sendEmotion.bind(this);
   }
 
@@ -31,25 +36,33 @@ class App extends Component {
     this.socket.emit('chat message', 'a message');
   }
 
+  restartGame() {
+    window.location.reload();
+  }
+  
   startGame() {
     this.setState({ gameStarted: true });
-    this.socket.emit('start game', 'start game!');
+    this.socket.emit('start game');
     console.log('starting game!');
   }
 
   render() {
     return (
       <div className="App">
-        { !this.state.gameStarted &&
+        { !this.state.gameStarted && !this.state.endGame && 
           <span>
-            <div className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-            </div>
             <p className="App-intro">
-              To start fwhispering, <code>src/App.js</code> and save to reload.
+              { this.state.nextPlayer && !this.state.endGame ? 'You\'re Up next' : 'Hold on... Another Player is Going' }
             </p>
             <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
+        }
+        { 
+          this.state.endGame && 
+          <div> 
+            The gyame has Ended. Press Start to Start Again 
+            <button onClick={ this.restartGame }>Start</button> 
+          </div> 
         }
         <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} /> 
       </div>

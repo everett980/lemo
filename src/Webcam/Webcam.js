@@ -120,7 +120,7 @@ export default class WebcamWrapper extends Component {
           <button onClick={this.processPhoto}>Take Photo</button>
           </div>)
          : "Loading webcam..." }
-         <canvas id="screenshot-canvas" height="480" width="640">
+         <canvas className="show-false" id="screenshot-canvas" height="480" width="640">
          </canvas>
       </div>
     );
