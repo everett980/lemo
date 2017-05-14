@@ -52,7 +52,7 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        { !this.state.gameStarted &&
+        { !this.state.gameStarted && !this.state.endGame &&
           <span>
             <div className="App-header">
              <h1 className="App-logo">fwhisper</h1>
