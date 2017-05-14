@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class GameStart extends Component {
   constructor(props) {
     super(props);
-    this.state = { leader: false };
     this.urlStart ='';
   }
 
@@ -15,17 +14,11 @@ export default class GameStart extends Component {
           <p>{ this.props.numPeeps += this.props.numPeeps === 1 ? ' person is here' : ' people are here' }</p>
         </div>
         <div className="App-body">
-          { this.state.leader && <button onClick={ this.props.startGame }>Start</button> }
-          { this.state.leader &&
-              <div>
-                <p>Share this url with your friends!</p>
-                <p>{ this.urlStart }/{ Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5) }</p>
-              </div>
-          }
-          { this.state.leader
-              ? <button className="isLeader" onClick={ () => this.setState({ leader: false }) }>I no longer want to lead</button>
-              : <button className="isFollower" onClick={ () => { if (!this.state.leader) this.setState({ leader: true }) }}>I am the leader!</button>
-          }
+          <button className="start-button" onClick={ this.props.startGame }>Start</button> 
+          <div>
+            <p>Share this url with your friends!</p>
+            <p>{ this.urlStart }/{ Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5) }</p>
+          </div>
         </div>
       </div>
     );
