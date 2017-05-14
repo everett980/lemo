@@ -19,7 +19,6 @@ class App extends Component {
       resultsArr: null
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
-    this.socket.on('go to waiting', () => this.setState({ waiting: true }));
     this.socket.on('start game', () => this.setState({ gameStarted: true }));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
@@ -42,8 +41,6 @@ class App extends Component {
     if(!this.state.endGame) {
       if (this.state.nextPlayer) {
         return <p>you're next</p>
-      } else if (this.state.waiting) {
-        return <p>waiting for your turn</p>
       } else if (!this.state.gameStarted) {
         return <p>waiting to start</p>
       } else {
@@ -55,7 +52,7 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        { (!this.state.gameStarted || this.state.waiting) && !this.state.endGame &&
+        { !this.state.gameStarted && !this.state.endGame &&
           <span>
             <div className="App-header">
              <h1 className="App-logo">fwhisper</h1>
@@ -64,7 +61,7 @@ class App extends Component {
               to start fwhispering, invite your friends.
             </p>
             { this.renderGameHint() }
-            { !this.state.gameStarted && <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
+            <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
