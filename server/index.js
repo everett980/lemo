@@ -34,7 +34,8 @@ io.on('connection', function(socket) {
   }
 
   function nextTurn() {
-    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][1]);
+    console.log('NEXT TURNNNNNNN')
+    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1]);
     if(currentPlayer + 1 < playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player')
     socket.emit('wait');
   };
@@ -75,7 +76,7 @@ io.on('connection', function(socket) {
     }
     resultsArray.push([ image, [primaryEmotion, secondaryEmotion], score]);
 
-    // increment turn number 
+    // increment turn number
     currentPlayer++;
 
     // HANDLE ENDGAME
