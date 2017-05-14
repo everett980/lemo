@@ -35,7 +35,7 @@ class GameSummary extends Component {
             <li className="collection-item avatar">
               <img src={imgUri} className="circle" />
               <span className="title">{ idx + 1 === 1 ? "1st" : idx + 1 === 2 ? "2nd" : idx + 1 === 3 ? "3rd" : idx + 1 + "th" }</span>
-              <p colored>{ score }%</p>
+              <p colored>{ score.toFixed(2) }%</p>
             </li>
             ))
           }
