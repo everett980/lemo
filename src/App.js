@@ -69,8 +69,9 @@ class App extends Component {
     console.log('hitting the giphy api')
     return axios.get(`http://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
     .then(res=>{
-      const gifUrl = res.data.data[0]['images']['fixed_height']['url']
-      console.log('gifs', gifUrl)
+      const gifCount = res.data.data.length
+      const rand = Math.floor(Math.random*gifCount)
+      const gifUrl = res.data.data[rand]['images']['fixed_height']['url']
       // this._sendEmotion(gifUrl)
       // this.setState({gifUrl: gifUrl })
       return gifUrl;
