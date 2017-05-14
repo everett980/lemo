@@ -56,15 +56,34 @@ export default class WebcamWrapper extends Component {
 
   processPhoto() {
     const image = this.refs.webcam.getScreenshot();
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    // var img = document.getElementById('someImageId');
+    // context.drawImage(img, 0, 0 );
+    // var theData = context.getImageData(0, 0, img.width, img.height);
+    // this.detector.process(theData, 0);
+
+
+    var img = new Image;
+    img.onload = () => {
+      console.log(img.width, img.height);
+      context.drawImage(img,0,0); // Or at whatever offset you like
+      var theData = context.getImageData(0, 0, img.width, img.height);
+      this.detector.process(theData, 0);
+    };
+    img.src = image;
+
+
+
     this.setState({
       screenshot: image
     }, () => {
       console.log(this.state);
       var canvas = document.getElementById('screenshot-canvas');
       var ctx = canvas.getContext("2d");
-      var imageDataWeHope = ctx.getImageData(0, 0, 640, 480);
+      var imageDataWeHope = ctx.getImageData(0, 0, 1280, 960);
       console.log('image data we\'re sending', imageDataWeHope);
-      this.detector.process(imageDataWeHope, 0);
+//      this.detector.process(imageDataWeHope, 0);
     });
   }
 
@@ -85,10 +104,8 @@ export default class WebcamWrapper extends Component {
            { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
          </canvas>
          <h1>FROM THE STATE!!!!</h1>
-         { this.state.image ?
-           <canvas id="new-id">
-
-           </canvas> : null }
+         <canvas id="new-id" height="480" width="640">
+         </canvas>
       </div>
     );
   }
