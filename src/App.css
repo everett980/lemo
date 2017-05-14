@@ -29,6 +29,38 @@ p#status {
   color: #EFE1E1;
 }
 
+.alt-row {
+  background-color: #463F71;
+}
+
+.game-summary row {
+  padding: 15px;
+}
+
+.emotions {
+  font-size: 30px;
+}
+
+.emotions-title {
+  font-size: 16px;
+  color: #D18488;
+  margin-bottom: 4px;
+}
+
+.score {
+  font-size: 30px;
+}
+
+.score-title {
+  font-size: 16px;
+  color: #D18488;
+  margin-bottom: 4px;
+}
+
+.game-summary {
+  height: 200px;
+}
+
 .btn, .btn-large {
   background-color: white;
   color:  black;
