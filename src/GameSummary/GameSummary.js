@@ -18,7 +18,7 @@ class GameSummary extends Component {
       <div className="App">
         <div className="row">
           <div className="col s12">
-            <p className="App-intro">good job you!</p>
+            <p className="App-logo">GAME OVER</p>
           </div>
         </div>
         <div className="row">
