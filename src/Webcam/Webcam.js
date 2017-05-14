@@ -26,10 +26,8 @@ export default class WebcamWrapper extends Component {
         faces,
         image,
         timestamp
-      }, function() {
-        var canvas = document.getElementById('new-id');
-        var newCtx = canvas.getContext("2d");
-        newCtx.putImageData(this.state.image, 0, 0);
+      }, () => {
+        console.log(this.state);
       });
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
@@ -57,33 +55,26 @@ export default class WebcamWrapper extends Component {
   processPhoto() {
     const image = this.refs.webcam.getScreenshot();
     var canvas = document.createElement('canvas');
+    canvas.height = 480;
+    canvas.width = 640;
     var context = canvas.getContext('2d');
     // var img = document.getElementById('someImageId');
     // context.drawImage(img, 0, 0 );
     // var theData = context.getImageData(0, 0, img.width, img.height);
     // this.detector.process(theData, 0);
 
-
     var img = new Image;
     img.onload = () => {
-      console.log(img.width, img.height);
+      console.log('inside img.onload', img.width, img.height);
       context.drawImage(img,0,0); // Or at whatever offset you like
       var theData = context.getImageData(0, 0, img.width, img.height);
+      console.log('theData', theData);
       this.detector.process(theData, 0);
     };
     img.src = image;
 
-
-
     this.setState({
       screenshot: image
-    }, () => {
-      console.log(this.state);
-      var canvas = document.getElementById('screenshot-canvas');
-      var ctx = canvas.getContext("2d");
-      var imageDataWeHope = ctx.getImageData(0, 0, 1280, 960);
-      console.log('image data we\'re sending', imageDataWeHope);
-//      this.detector.process(imageDataWeHope, 0);
     });
   }
 
@@ -104,8 +95,8 @@ export default class WebcamWrapper extends Component {
            { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
          </canvas>
          <h1>FROM THE STATE!!!!</h1>
-         <canvas id="new-id" height="480" width="640">
-         </canvas>
+         {/* <canvas id="new-id" height="480" width="640">
+         </canvas> */}
       </div>
     );
   }
