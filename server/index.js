@@ -34,8 +34,8 @@ io.on('connection', function(socket) {
   }
 
   function nextTurn() {
-    io.to(playerIds[currentPlayer]).emit('start game');
-    console.log('start game', currentPlayer, playerIds, playerIds[currentPlayer]);
+    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][1]);  
+    if(currentPlayer + 1 < playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player')
   };
 
   socket.on('disconnect', function() {
@@ -105,7 +105,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
-// socket.emit('go to waiting');
     currentPlayer = 0;
     resultsArray = [];
     const tempCopy = [];
