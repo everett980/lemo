@@ -21,7 +21,6 @@ class App extends Component {
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', (prompt) => this.setState({ gameStarted: true, nextPrompt: prompt }));
-    this.socket.on('start game', () => this.setState({ gameStarted: true }, () => console.log('enabling webcam')));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
     this.startGame = this.startGame.bind(this);
@@ -54,7 +53,7 @@ class App extends Component {
    
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      return <p> Try to Make a {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]} face</p>
+      return <p>Try to Make a face with {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]}</p>
     }
   }
   
@@ -70,10 +69,10 @@ class App extends Component {
               to start fwhispering, invite your friends.
             </p>
             { this.renderGameHint() }
+            { this.renderGamePrompt() }
             <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }
-        { this.renderGamePrompt() }
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
         <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} />
       </div>
