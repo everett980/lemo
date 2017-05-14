@@ -12,8 +12,13 @@ class GameSummary extends Component {
 
   render() {
     console.log(this.props.resultsArr);
-    console.log(this.props.resultsArr.map(([_, emotes]) => emotes));
-    const images = this.props.resultsArr.map(([imgUri]) => <img src={imgUri} />);
+    const images = this.props.resultsArr.map(([imgUri, emotions, score, gifUrl]) => <div>
+      <img src={imgUri} />
+      <span>Emotions: {emotions[0][0]}{emotions[1][0]}</span>
+      <img src={gifUrl} />
+      <span>Score: {score}</span>
+    </div>
+    );
     return (
       <div className="App">
         <div className="row">

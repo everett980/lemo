@@ -34,6 +34,7 @@ p#status {
   color:  black;
   font-family: 'Megrim', cursive;
 }
+
 .btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
   background-color: black;
   color:  white;
@@ -47,6 +48,6 @@ p#status {
   color:  white;
 }
 
-.current-status {
-
+.webcam-area {
+  margin: 15px 0;
 }
