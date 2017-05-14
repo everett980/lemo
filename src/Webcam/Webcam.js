@@ -112,6 +112,7 @@ export default class WebcamWrapper extends Component {
   render() {
     console.log('webcam');
     return (
+
       <div className={`App show-${this.props.showClass}`}>
         <div className="webcam-area row">
           <div className="col s12">
@@ -121,6 +122,7 @@ export default class WebcamWrapper extends Component {
           <div className="col s12">
             { this.state.showWebcamBtn ? <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> : <p>please wait</p>}
           </div>
+
         </div>
         <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
         {
