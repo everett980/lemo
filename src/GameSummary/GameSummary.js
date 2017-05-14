@@ -18,7 +18,7 @@ class GameSummary extends Component {
       <div className="App">
         <div> 
           The gyame has Ended. Press Start to Start Again
-          <button onClick={ this.restartGame }>Start</button> 
+          <button className="btn waves-effect waves-indigo" onClick={ this.restartGame }>Start</button> 
           {images}
         </div> 
       </div>

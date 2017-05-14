@@ -34,8 +34,9 @@ io.on('connection', function(socket) {
   }
 
   function nextTurn() {
-    io.to(playerIds[currentPlayer]).emit('start game');
-    console.log('start game', currentPlayer, playerIds, playerIds[currentPlayer]);
+    io.to(playerIds[currentPlayer]).emit('start game', resultsArray[currentPlayer - 1][1]);
+    if(currentPlayer + 1 < playerIds.length) io.to(playerIds[currentPlayer + 1]).emit('next player')
+    socket.emit('wait');
   };
 
   socket.on('disconnect', function() {
@@ -68,9 +69,9 @@ io.on('connection', function(socket) {
         scoreDifference(prevPrimaryEmotion[1], primaryEmotion[1])
         + scoreDifference(prevSecondaryEmotion[1], secondaryEmotion[1])
       ) / 2).toFixed(2)
-    console.log(prevPrimaryEmotion.join(' '), prevSecondaryEmotion.join(' '))
-    console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
-    console.log("SCORE", score);
+      console.log(prevPrimaryEmotion.join(' '), prevSecondaryEmotion.join(' '))
+      console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
+      console.log("SCORE", score);
     }
     resultsArray.push([ image, [primaryEmotion, secondaryEmotion], score]);
 
@@ -105,7 +106,6 @@ io.on('connection', function(socket) {
   });
 
   socket.on('start game', function() {
-// socket.emit('go to waiting');
     currentPlayer = 0;
     resultsArray = [];
     const tempCopy = [];

@@ -53,29 +53,27 @@ class App extends Component {
       }
     }
   }
-   
+
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      return <p> Try to Make a {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]} face</p>
+      return <p>Try to Make a face with {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]}</p>
     }
   }
-  
+
   render() {
     return (
       <div className="App container">
-        { !this.state.gameStarted && !this.state.waiting && !this.state.endGame &&
-          <span>
-            <div className="App-header">
-             <h1 className="App-logo">fwhisper</h1>
-            </div>
-            <p className="App-intro">
-              to start fwhispering, invite your friends.
-            </p>
-            { this.renderGameHint() }
-            <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
-          </span>
-        }
-        { this.renderGamePrompt() }
+        <span>
+          <div className="App-header">
+           <h1 className="App-logo">fwhisper</h1>
+          </div>
+          { !this.state.waiting && <p className="App-intro">
+            to start fwhispering, invite your friends.
+          </p> }
+          { this.renderGameHint() }
+          { this.renderGamePrompt() }
+          { !this.state.waiting && !this.state.gameStarted && <GameStart gameStarted={this.state.gameStarted} numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
+        </span>
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
         <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} /> 
       </div>
