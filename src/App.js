@@ -40,23 +40,27 @@ class App extends Component {
   renderGameHint() {
     if(!this.state.endGame) {
       if (this.state.nextPlayer) {
-        return <div>You're Up Next</div>
+        return <p>you're next</p>
       } else if (!this.state.gameStarted) {
-        return <div>Waiting for First Player to Start</div>
+        return <p>waiting to start</p>
       } else {
-        return <div>Hold On... Another Player is Going</div>
+        return <p>the game is afoot</p>
       }
     } 
-  
+
   }
   render() {
     return (
-      <div className="App">
-        { !this.state.gameStarted && !this.state.endGame && 
+      <div className="App container">
+        { !this.state.gameStarted &&
           <span>
+            <div className="App-header">
+             <h1 className="App-logo">fwhisper</h1>
+            </div>
             <p className="App-intro">
-              { this.renderGameHint() }
+              to start fwhispering, invite your friends.
             </p>
+            { this.renderGameHint() }
             <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }

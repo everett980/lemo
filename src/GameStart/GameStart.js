@@ -11,8 +11,7 @@ export default class GameStart extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h1>Welcome to _fwhispering_</h1>
-          <h3>{this.props.numPeeps} people are here</h3>
+          <p>{ this.props.numPeeps += this.props.numPeeps === 1 ? ' person is here' : ' people are here' }</p>
         </div>
         <div className="App-body">
           <button className="start-button" onClick={ this.props.startGame }>Start</button> 
