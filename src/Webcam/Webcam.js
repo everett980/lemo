@@ -54,7 +54,8 @@ export default class WebcamWrapper extends Component {
           [ second, emotions[second] ]
         ];
         console.log(highestTwo);
-        this.props.getGiph(highest+second)
+        //grab gif
+        this.props.getGiph(highest)
         // this.props.sendEmotion([this.state.screenshot, highestTwo]);
       });
     });
