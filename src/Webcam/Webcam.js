@@ -28,6 +28,8 @@ export default class WebcamWrapper extends Component {
         timestamp
       }, () => {
         console.log(this.state);
+        const screenshotCanvas = document.getElementById('screenshot-canvas');
+        screenshotCanvas.getContext("2d").putImageData(this.state.image, 0, 0);
       });
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
@@ -91,12 +93,8 @@ export default class WebcamWrapper extends Component {
           <button onClick={this.processPhoto}>Take Photo</button>
           </div>)
          : "Loading webcam..." }
-         <canvas id="screenshot-canvas">
-           { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
+         <canvas id="screenshot-canvas" height="480" width="640">
          </canvas>
-         <h1>FROM THE STATE!!!!</h1>
-         {/* <canvas id="new-id" height="480" width="640">
-         </canvas> */}
       </div>
     );
   }
