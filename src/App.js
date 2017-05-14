@@ -60,7 +60,6 @@ class App extends Component {
 
   renderGamePrompt() {
     if(this.state.nextPrompt) {
-      // return <p> Try to Make a {this.state.nextPrompt[0][0]} and {this.state.nextPrompt[1][0]} face</p>
       return <p> Try to Make a <img src={this.state.nextPrompt}/> face</p>
     }
   }
@@ -69,8 +68,11 @@ class App extends Component {
     console.log('hitting the giphy api')
     return axios.get(`http://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
     .then(res=>{
-      const gifUrl = res.data.data[0]['images']['fixed_height']['url']
-      console.log('gifs', gifUrl)
+      const gifCount = res.data.data.length
+      const rand = Math.floor(Math.random()*gifCount)
+      console.log('return gif data', res.data.data);
+      console.log('rand', rand);
+      const gifUrl = res.data.data[rand]['images']['fixed_height']['url']
       // this._sendEmotion(gifUrl)
       // this.setState({gifUrl: gifUrl })
       return gifUrl;
@@ -81,12 +83,12 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        { !this.state.gameStarted && !this.state.endGame &&
+        { !this.state.endGame &&
           <span>
             <div className="App-header">
              <h1 className="App-logo">fwhisper</h1>
             </div>
-            { !this.state.waiting && <p className="App-intro">
+            { !this.state.gameStarted && !this.state.waiting && <p className="App-intro">
               to start fwhispering, invite your friends.
             </p> }
             { this.renderGameHint() }
