@@ -53,6 +53,6 @@ p#status {
 }
 
 .colored {
-  background-color: #352E5C;
   max-width: 30vw;
+  color:  black;
 }
