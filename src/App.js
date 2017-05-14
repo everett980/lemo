@@ -16,14 +16,18 @@ class App extends Component {
       nextPlayer: false,
       gameStarted: false,
       endGame: false,
-      resultsArr: null
+      resultsArr: null,
+      nextPrompt: null
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('go to waiting', () => this.setState({ waiting: true }));
     this.socket.on('start game', () => this.setState({ gameStarted: true }));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
+    this.socket.on('next prompt', (nextPrompt) => this.setState({ nextPrompt: nextPrompt }))
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
     this.startGame = this.startGame.bind(this);
+    this.renderGameHint = this.renderGameHint.bind(this);
+    this.renderGamePrompt = this.renderGamePrompt.bind(this);
     this._sendEmotion = this._sendEmotion.bind(this);
   }
 
@@ -49,9 +53,15 @@ class App extends Component {
       } else {
         return <p>the game is afoot</p>
       }
-    } 
-
+    }
   }
+   
+  renderGamePrompt() {
+    if(this.state.nextPrompt) {
+      return <p> Please milord, try to do {this.state.nextPrompt}</p>
+    }
+  }
+  
   render() {
     return (
       <div className="App container">
@@ -67,6 +77,7 @@ class App extends Component {
             { !this.state.gameStarted && <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} /> }
           </span>
         }
+        { this.renderGamePrompt() }
         { this.state.endGame && <GameSummary resultsArr={this.state.resultsArr}></GameSummary> }
         <WebcamWrapper sendEmotion={this._sendEmotion} showClass={this.state.gameStarted} /> 
       </div>
