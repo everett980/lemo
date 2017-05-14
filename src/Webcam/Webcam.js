@@ -30,7 +30,10 @@ export default class WebcamWrapper extends Component {
         const screenshotCanvas = document.getElementById('screenshot-canvas');
         screenshotCanvas.getContext("2d").putImageData(this.state.image, 0, 0);
         if (!faces.length) {
-          this.setState({ retake: true });
+          this.setState({
+            retake: true,
+            showWebcamBtn: false
+          });
           return;
         }
         const { emotions } = faces[0];
@@ -98,7 +101,8 @@ export default class WebcamWrapper extends Component {
     img.src = image;
 
     this.setState({
-      screenshot: image
+      screenshot: image,
+      showWebcamBtn: false
     });
   }
 
@@ -112,9 +116,7 @@ export default class WebcamWrapper extends Component {
         <div className="webcam-area">
           { this.state.retake && <h1>No face found, please retake!</h1> }
           <Webcam audio={false} ref="webcam"/>
-          <div className="button_w">
-            <button className={`photo-button btn-disabled-${!this.state.showWebcamBtn}`} onClick={this.processPhoto}>{this.state.showWebcamBtn ? 'Take Photo' : 'Systems Initializing'}</button>
-          </div>
+          { this.state.showWebcamBtn ? <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> : <p>Processing...</p>}
         </div>
         <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
         {

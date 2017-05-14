@@ -1,26 +1,45 @@
 .App {
   text-align: center;
 }
-
 .App-logo {
   font-family: 'Megrim', cursive;
-}
+  font-size: 10vh;
 
+}
 .App-header {
   height: 10vh;
   padding: 5vh;
   margin-bottom: 10vh;
 }
-
 .App-intro {
-  font-size: large;
+  font-size: 4vh;
 }
 
 body {
   background-color: #222;
   color: white;
+  margin: 0;
+  padding: 0;
 }
-
 p {
   font-family: 'Abel', sans-serif;
+  font-size: 3vh;
+}
+
+.btn, .btn-large {
+  background-color: white;
+  color:  black;
+  font-family: 'Megrim', cursive;
+}
+.btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
+  background-color: black;
+  color:  white;
+}
+.waves-effect {
+  background-color: white;
+  color:  black;
+}
+.waves-effect.waves-indigo .waves-ripple {
+  background-color: #1a237e;
+  color:  white;
 }
