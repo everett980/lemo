@@ -33,7 +33,7 @@ p#status {
   background-color: white;
   color:  black;
   font-family: 'Megrim', cursive;
-  width: 100%;
+  width: 640px;
 }
 
 .btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
@@ -48,7 +48,9 @@ p#status {
   background-color: #1a237e;
   color:  white;
 }
-
 .webcam-area {
   margin: 15px 0;
+}
+canvas {
+  width: 100%;
 }
