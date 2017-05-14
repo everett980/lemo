@@ -32,9 +32,6 @@ io.on('connection', function(socket) {
   function nextTurn() {
     io.to(playerIds[currentPlayer]).emit('start game');
     console.log('start game', currentPlayer, playerIds, playerIds[currentPlayer]);
-    if (currentPlayer !== playerIds.length - 1) {
-      io.to(playerIds[currentPlayer]).emit('next player');
-    }
   };
 
   socket.on('disconnect', function() {
@@ -58,10 +55,6 @@ io.on('connection', function(socket) {
   socket.on('submit data', function(message) {
     resultsArray.push(message);
     // TODO: Process score if not first data point
-
-    if(currentPlayer > 0) {
-      io.to(playerIds[currentPlayer + 1]).emit('next prompt', resultsArray[currentPlayer])
-    }
 
     currentPlayer++;
     console.log(resultsArray.length, playerIds);
