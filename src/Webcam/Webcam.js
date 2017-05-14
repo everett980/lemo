@@ -27,7 +27,6 @@ export default class WebcamWrapper extends Component {
     this.detector.addEventListener("onWebcamConnectFailure",
       function () {
         console.log('wtf');
-        console.log(err_detail);
       });
 
     this.detector.detectAllExpressions();
@@ -44,6 +43,7 @@ export default class WebcamWrapper extends Component {
     this.setState({
       screenshot: image
     });
+    console.log(this.state);
     this.detector.process(image);
   }
 
@@ -54,7 +54,7 @@ export default class WebcamWrapper extends Component {
         <div className="App-header">
           <h1>{this.props.word}</h1>
         </div>
-        {/* <Webcam audio={false} ref="webcam"/> */}
+        <Webcam audio={false} ref="webcam"/>
         <div id="webcam"></div>
         <button onClick={this.processPhoto}>Take Photo</button>
         { this.state.screenshot ? <img src={this.state.screenshot} /> : null }
