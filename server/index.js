@@ -16,19 +16,24 @@ app.get('/', function(req, res, next) {
 });
 
 let numPlayers = 0;
+const playerIds = [];
 
 
 io.on('connection', function(socket) {
   ++numPlayers;
+  playerIds.push(socket.id);
+  io.emit('numPlayersConnected', numPlayers);
   console.log('a user connected');
   console.log('numPlayers:', numPlayers);
-  io.emit('numPlayersConnected', numPlayers);
+  console.log(playerIds);
 
   socket.on('disconnect', function() {
     --numPlayers;
+    playerIds.splice(playerIds.indexOf(socket.id), 1);
+    io.emit('numPlayersConnected', numPlayers);
     console.log('a user disconnected');
     console.log('numPlayers:', numPlayers);
-    io.emit('numPlayersConnected', numPlayers);
+    console.log(playerIds);
   });
 
   socket.on('chat message', function(message) {
@@ -36,9 +41,9 @@ io.on('connection', function(socket) {
     io.emit('chat message', message);
   });
 
-  socket.on('connected players', function( {
-    
-  }));
+  socket.on('connected players ids', function() {
+    io.emit(playerIds);
+  });
 });
 
 http.listen(3001, function() {
