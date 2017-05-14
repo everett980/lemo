@@ -51,6 +51,13 @@ p#status {
 .webcam-area {
   margin: 15px 0;
 }
+
 canvas {
   width: 100%;
 }
+
+.colored {
+  max-width: 30vw;
+  color:  black;
+}
+
