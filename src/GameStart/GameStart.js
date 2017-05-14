@@ -19,7 +19,7 @@ export default class GameStart extends Component {
           { this.state.leader &&
               <div>
                 <p>Share this url with your friends!</p>
-                <p>`${ this.urlStart }/Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)`</p>
+                <p>{ this.urlStart }/{ Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5) }</p>
               </div>
           }
           { this.state.leader
