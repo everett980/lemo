@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class GameStart extends Component {
   constructor(props) {
     super(props);
-    this.state = { number: 5, leader: false };
+    this.state = { leader: false };
     this.urlStart ='';
   }
 
@@ -12,7 +12,7 @@ export default class GameStart extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h1>{this.state.number} people are here</h1>
+          <h1>{this.props.numPeeps} people are here</h1>
         </div>
         <div className="App-body">
           { this.state.leader && <button onClick={this.props.sendChat}>Start</button> }

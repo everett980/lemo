@@ -10,8 +10,11 @@ class App extends Component {
     console.log('app');
     super(props);
     this.socket = io.connect(); // eslint-disable-line
-
     this._sendChat = this._sendChat.bind(this);
+    this.state = {
+      numPlayersConnected: 0
+    }
+    this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }))
   }
 
   _sendChat() {
@@ -24,13 +27,12 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          To start fwhispering, <code>src/App.js</code> and save to reload.
         </p>
-        <GameStart sendChat={this._sendChat}/>
-        <WebcamWrapper/>
+        <GameStart sendChat={this._sendChat} numPeeps={this.state.numPlayersConnected}/>
+        <WebcamWrapper />
       </div>
     );
   }
