@@ -104,16 +104,10 @@ class App extends Component {
 
 
           { this.state.nextPrompt? (
-          <div className="row image-container"><div className="col-xs-12
-            col-sm-6
-            col-md-6
-            col-lg-6">
+          <div className="row image-container"><div className="col-xs-12 col-sm-6">
             <p> Try to Make this face:</p>
             <img src={this.state.nextPrompt}/>
-          </div><div className="col-xs-12
-            col-sm-6
-            col-md-6
-            col-lg-6">
+          </div><div className="col-xs-12 col-sm-6">
             <WebcamWrapper
               sendEmotion={this._sendEmotion}
               showClass={this.state.gameStarted}
@@ -122,10 +116,7 @@ class App extends Component {
               />
           </div>
         </div>
-        ):(  <div className="row image-container"><div className="col-xs-12
-          col-sm-12
-          col-md-12
-          col-lg-12">
+        ):(  <div className="row image-container"><div className="col-xs-12">
           <WebcamWrapper
             sendEmotion={this._sendEmotion}
             showClass={this.state.gameStarted}
