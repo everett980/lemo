@@ -114,6 +114,11 @@ io.on('connection', function(socket) {
     };
     playerIds = tempCopy;
     io.to(playerIds[0]).emit('start game');
+    playerIds.forEach((id, index) => {
+      if(index) {
+        io.to(id).emit('wait');
+      }
+    });
   })
 
 });

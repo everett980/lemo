@@ -21,7 +21,7 @@ class App extends Component {
     }
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', (prompt) => this.setState({ gameStarted: true, nextPrompt: prompt }));
-    this.socket.on('start game', () => this.setState({ gameStarted: true }, () => console.log('enabling webcam')));
+    this.socket.on('wait', () => this.setState({ waiting: true }));
     this.socket.on('next player', () => this.setState({ nextPlayer: true }));
     this.socket.on('game over', (resultsArr) => this.setState({ endGame: true, resultsArr: resultsArr }));
     this.startGame = this.startGame.bind(this);
@@ -44,6 +44,8 @@ class App extends Component {
     if(!this.state.endGame) {
       if (this.state.nextPlayer) {
         return <p>you're next</p>
+      } else if (this.state.waiting) {
+        return <p>waiting for current player</p>
       } else if (!this.state.gameStarted) {
         return <p>waiting to start</p>
       } else {
@@ -61,7 +63,7 @@ class App extends Component {
   render() {
     return (
       <div className="App container">
-        { !this.state.gameStarted && !this.state.endGame &&
+        { !this.state.gameStarted && !this.state.waiting && !this.state.endGame &&
           <span>
             <div className="App-header">
              <h1 className="App-logo">fwhisper</h1>
