@@ -14,7 +14,7 @@ export default class WebcamWrapper extends Component {
       console.log('init success');
       this.setState({showWebcamBtn: true})
     });
-    
+
     this.detector.addEventListener("onInitializeFailure", function() {
       console.log('init failed')
     });
@@ -38,7 +38,7 @@ export default class WebcamWrapper extends Component {
         let highest;
         let second;
         Object.keys(emotions).forEach(emotion => {
-          if (emotion === 'engagement') return;
+          if (emotion === 'engagement' || emotion === 'valence') return;
           console.log(emotion, emotions[emotion]);
           const val = emotions[emotion];
           if (highest && val > emotions[highest] || !highest) {
@@ -49,10 +49,10 @@ export default class WebcamWrapper extends Component {
           }
           console.log(highest, second);
         });
-        const highestTwo = {
-          [highest]: emotions[highest],
-          [second]: emotions[second]
-        };
+        const highestTwo = [
+          [ highest, emotions[highest] ],
+          [ second, emotions[second] ]
+        ];
         console.log(highestTwo);
         this.props.sendEmotion([this.state.screenshot, highestTwo]);
       });

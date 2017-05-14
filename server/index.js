@@ -29,6 +29,10 @@ io.on('connection', function(socket) {
   console.log('numPlayers:', numPlayers);
   console.log(playerIds);
 
+  function scoreDifference(previousEmotion, currentEmotion) {
+    return Math.min(previousEmotion, currentEmotion) / Math.max(previousEmotion, currentEmotion);
+  }
+
   function nextTurn() {
     io.to(playerIds[currentPlayer]).emit('start game');
     console.log('start game', currentPlayer, playerIds, playerIds[currentPlayer]);
@@ -43,31 +47,65 @@ io.on('connection', function(socket) {
     console.log(playerIds);
   });
 
-  socket.on('chat message', function(message) {
-    console.log(message);
-    io.emit('chat message', message);
-  });
-
   socket.on('connected players ids', function() {
     io.emit(playerIds);
   });
 
-  socket.on('submit data', function(message) {
-    resultsArray.push(message);
-    // TODO: Process score if not first data point
+  // [ { data: [Object] }, [ [surprise, 11.449400901794434],  [sadness: 2.9407808780670166] ] ],
+  socket.on('submit data', function([ image, [primaryEmotion, secondaryEmotion] ]) {
+    let score = 0;
 
+    // CALCULATE SCORE FOR PLAYERS OTHER THAN FIRST PLAYER
+    if (currentPlayer) {
+      // get previous player's data
+      const [ prevImage, [prevPrimaryEmotion, prevSecondaryEmotion], prevScore ] = resultsArray[currentPlayer - 1];
+
+      // check if current emotions match previous emotions
+      primaryEmotion[1] = primaryEmotion[0] === prevPrimaryEmotion[0] ? primaryEmotion[1] : 0;
+      secondaryEmotion[1] = secondaryEmotion[0] === prevSecondaryEmotion[0] ? secondaryEmotion[1] : 0;
+
+      score += ((
+        scoreDifference(prevPrimaryEmotion[1], primaryEmotion[1])
+        + scoreDifference(prevSecondaryEmotion[1], secondaryEmotion[1])
+      ) / 2).toFixed(2)
+    console.log(prevPrimaryEmotion.join(' '), prevSecondaryEmotion.join(' '))
+    console.log(primaryEmotion.join(' '), secondaryEmotion.join(' '))
+    console.log("SCORE", score);
+    }
+    resultsArray.push([ image, [primaryEmotion, secondaryEmotion], score]);
+
+    // increment turn number
     currentPlayer++;
-    console.log(resultsArray.length, playerIds);
+
+    // HANDLE ENDGAME
     if (resultsArray.length === playerIds.length) {
-      // TODO: Calculate first person's score
+      // CALCULATE FIRST PLAYER'S SCORE
+      // grab first and final players' data
+      const [ originalImage, [originalPrimaryEmotion, originalSecondaryEmotion], originalScore ] = resultsArray[0];
+      const [ finalImage, [finalPrimaryEmotion, finalSecondaryEmotion], finalScore ] = resultsArray[resultsArray.length - 1];
+      console.log('FINAL EMOTES', originalPrimaryEmotion.join(' '), originalSecondaryEmotion.join(' '));
+      console.log('SECONDARY', finalPrimaryEmotion.join(' '), finalSecondaryEmotion.join(' '))
+      // check if final emotions match original emotions
+      originalPrimaryEmotion[1] = originalPrimaryEmotion[0] === finalPrimaryEmotion[0] ? originalPrimaryEmotion[1] : 0;
+      originalSecondaryEmotion[1] = originalSecondaryEmotion[0] === finalSecondaryEmotion[0] ? originalSecondaryEmotion[1] : 0;
+      console.log('COMPARE', originalPrimaryEmotion.join(' '), originalSecondaryEmotion.join(' '))
+      // save first player's score to results
+      resultsArray[0][2] += ((
+        scoreDifference(finalPrimaryEmotion[1], originalPrimaryEmotion[1])
+        + scoreDifference(finalSecondaryEmotion[1], originalSecondaryEmotion[1])
+      ) / 2).toFixed(2);
+      console.log(resultsArray[0][2])
+
+      // END GAME
       io.emit('game over', resultsArray);
+    // handle moving to next turn
     } else {
       nextTurn();
     }
   });
 
   socket.on('start game', function() {
-//    socket.emit('go to waiting');
+// socket.emit('go to waiting');
     currentPlayer = 0;
     resultsArray = [];
     const tempCopy = [];
