@@ -16,7 +16,9 @@ app.get('/', function(req, res, next) {
 });
 
 let numPlayers = 0;
-const playerIds = [];
+let playerIds = [];
+const resultsArray = [];
+let currentPlayer = 0;
 
 
 io.on('connection', function(socket) {
@@ -26,6 +28,12 @@ io.on('connection', function(socket) {
   console.log('a user connected');
   console.log('numPlayers:', numPlayers);
   console.log(playerIds);
+
+  function tellNext() {
+    console.log(currentPlayer);
+    console.log(playerIds[currentPlayer]);
+    io.to(playerIds[currentPlayer]).emit('start game', 'start game!');
+  };
 
   socket.on('disconnect', function() {
     --numPlayers;
@@ -45,9 +53,28 @@ io.on('connection', function(socket) {
     io.emit(playerIds);
   });
 
+  socket.on('submit data', function(message) {
+    currentPlayer++;
+    resultsArray.push(message);
+    // TODO: Process score if not first data point
+    console.log(resultsArray.length, playerIds);
+    if (resultsArray.length === playerIds.length) {
+      // TODO: Calculate first person's score
+      io.emit('game over', resultsArray);
+    } else {
+      tellNext();
+    }
+  });
+
   socket.on('start game', function() {
-    io.emit('start game', 'start game!');
-    io.emit('connected players ids', 'emit them!');
+    // io.emit('start game', 'start game!');
+    // io.emit('connected players ids', 'emit them!');
+    const tempCopy = [];
+    while(playerIds.length) {
+      tempCopy.push(playerIds.splice(Math.floor(Math.random() * playerIds.length), 1)[0]);
+    };
+    playerIds = tempCopy;
+    tellNext();
   })
 });
 

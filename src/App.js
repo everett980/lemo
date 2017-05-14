@@ -18,6 +18,12 @@ class App extends Component {
     this.socket.on('numPlayersConnected', currentNumPlayers => this.setState({ numPlayersConnected: currentNumPlayers }));
     this.socket.on('start game', () => this.setState({ gameStarted: true }));
     this.startGame = this.startGame.bind(this);
+    this._sendEmotion = this._sendEmotion.bind(this);
+  }
+
+  _sendEmotion(data) {
+    this.setState({ gameStarted: false });
+    this.socket.emit('submit data', data);
   }
 
   _sendChat() {
@@ -47,7 +53,7 @@ class App extends Component {
           </span>
         }
 
-        { this.state.gameStarted && <WebcamWrapper /> }
+        { this.state.gameStarted && <WebcamWrapper sendEmotion={this._sendEmotion} /> }
       </div>
     );
   }

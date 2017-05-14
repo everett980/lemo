@@ -30,6 +30,32 @@ export default class WebcamWrapper extends Component {
         console.log(this.state);
         const screenshotCanvas = document.getElementById('screenshot-canvas');
         screenshotCanvas.getContext("2d").putImageData(this.state.image, 0, 0);
+        if (!faces.length) {
+          this.setState({ retake: true });
+          return;
+        }
+        const { emotions } = faces[0];
+        console.log(emotions);
+        let highest;
+        let second;
+        Object.keys(emotions).forEach(emotion => {
+          if (emotion === 'engagement') return;
+          console.log(emotion, emotions[emotion]);
+          const val = emotions[emotion];
+          if (highest && val > emotions[highest] || !highest) {
+            second = highest;
+            highest = emotion;
+          } else if (!second || (second && val > emotions[second])) {
+            second = emotion;
+          }
+          console.log(highest, second);
+        });
+        const highestTwo = {
+          [highest]: emotions[highest],
+          [second]: emotions[second]
+        };
+        console.log(highestTwo);
+        this.props.sendEmotion([image, highestTwo]);
       });
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
@@ -89,6 +115,7 @@ export default class WebcamWrapper extends Component {
         </div>
         {this.state.showWebcam ?
           (<div className="webcam-area">
+            { this.state.retake && <h1>No face found, please retake!</h1> }
             <Webcam audio={false} ref="webcam"/>
           <button onClick={this.processPhoto}>Take Photo</button>
           </div>)
