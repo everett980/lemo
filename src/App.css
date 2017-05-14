@@ -36,7 +36,7 @@ p#status {
   width: 640px;
 }
 
-.btn:hover, .btn-large:hover, .btn:focus, btn-large:focus {
+.btn:hover, .btn-large:hover, .btn:focus, .btn-large:focus {
   background-color: black;
   color:  white;
 }

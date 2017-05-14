@@ -112,13 +112,17 @@ export default class WebcamWrapper extends Component {
   render() {
     console.log('webcam');
     return (
-      <div className={
-          `App show-${this.props.showClass}`
-        }>
-        <div className="webcam-area">
-          { this.state.retake && <h1>No face found, please retake!</h1> }
-          <Webcam audio={false} ref="webcam"/>
-          { this.state.showWebcamBtn ? <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> : <p>Processing...</p>}
+
+      <div className={`App show-${this.props.showClass}`}>
+        <div className="webcam-area row">
+          <div className="col s12">
+            { this.state.retake && <p className="App-header">No face found, please retake!</p> }
+            <Webcam audio={false} ref="webcam"/>
+          </div>
+          <div className="col s12">
+            { this.state.showWebcamBtn ? <button className="btn waves-effect waves-indigo" onClick={this.processPhoto}>take photo</button> : <p>please wait</p>}
+          </div>
+
         </div>
         <canvas className="show-false" id="screenshot-canvas" height="480" width="640"></canvas>
         {
