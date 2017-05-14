@@ -59,8 +59,8 @@ class App extends Component {
             </div>
             <p className="App-intro">
               to start fwhispering, invite your friends.
-              { this.renderGameHint() }
             </p>
+            { this.renderGameHint() }
             <GameStart numPeeps={this.state.numPlayersConnected} startGame={this.startGame} />
           </span>
         }

@@ -54,7 +54,7 @@ export default class WebcamWrapper extends Component {
           [second]: emotions[second]
         };
         console.log(highestTwo);
-        this.props.sendEmotion([image, highestTwo]);
+        this.props.sendEmotion([this.state.screenshot, highestTwo]);
       });
     });
     this.detector.addEventListener("onImageResultsFailure", function (image, timestamp, err_detail) {
