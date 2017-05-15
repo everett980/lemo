@@ -80,7 +80,7 @@ class App extends Component {
       // this.setState({gifUrl: gifUrl })
       return gifUrl;
     })
-    // .catch(err=>console.err('fails'))
+    .catch(err=>console.err('fails'))
   }
 
   render() {
