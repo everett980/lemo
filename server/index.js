@@ -8,9 +8,9 @@ var io = require('socket.io')(http);
 app.use('/socketConfig.js', express.static(__dirname+'/socketConfig.js'));
 app.use('/public', express.static(path.normalize(__dirname+'/../public')));
 
-// app.use('/static', express.static(path.normalize(__dirname+'/../build/static')));
+app.use('/static', express.static(path.normalize(__dirname+'/../build/static')));
 app.use('/node_modules', express.static(path.normalize(__dirname+'/../node_modules')));
-// app.use('/browser', express.static(path.normalize(__dirname+'/../browser')));
+app.use('/browser', express.static(path.normalize(__dirname+'/../browser')));
 
 app.get('/', function(req, res, next) {
   console.log('getting the home page')
