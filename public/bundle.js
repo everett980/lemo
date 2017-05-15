@@ -21979,7 +21979,7 @@
 	    key: 'getGiph',
 	    value: function getGiph(emotion) {
 	      console.log('hitting the giphy api');
-	      return _axios2.default.get('http://api.giphy.com/v1/gifs/search?q=' + emotion + '&api_key=dc6zaTOxFJmzC').then(function (res) {
+	      return _axios2.default.get('https://api.giphy.com/v1/gifs/search?q=' + emotion + '&api_key=dc6zaTOxFJmzC').then(function (res) {
 	        var gifCount = res.data.data.length;
 	        var rand = Math.floor(Math.random() * gifCount);
 	        console.log('return gif data', res.data.data);
@@ -21988,8 +21988,9 @@
 	        // this._sendEmotion(gifUrl)
 	        // this.setState({gifUrl: gifUrl })
 	        return gifUrl;
+	      }).catch(function (err) {
+	        return console.err('fails');
 	      });
-	      // .catch(err=>console.err('fails'))
 	    }
 	  }, {
 	    key: 'render',
