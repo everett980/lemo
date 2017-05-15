@@ -69,7 +69,7 @@ class App extends Component {
 
   getGiph (emotion) {
     console.log('hitting the giphy api')
-    return axios.get(`http://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
+    return axios.get(`https://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
     .then(res=>{
       const gifCount = res.data.data.length
       const rand = Math.floor(Math.random()*gifCount)
