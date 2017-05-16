@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 
-import logo from './logo.svg';
 import './App.css';
 
 import GameStart from './GameStart/GameStart.js';
@@ -70,7 +69,7 @@ class App extends Component {
 
   getGiph (emotion) {
     console.log('hitting the giphy api')
-    return axios.get(`http://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
+    return axios.get(`https://api.giphy.com/v1/gifs/search?q=${emotion}&api_key=dc6zaTOxFJmzC`)
     .then(res=>{
       const gifCount = res.data.data.length
       const rand = Math.floor(Math.random()*gifCount)
@@ -81,7 +80,7 @@ class App extends Component {
       // this.setState({gifUrl: gifUrl })
       return gifUrl;
     })
-    // .catch(err=>console.err('fails'))
+    .catch(err=>console.err('fails'))
   }
 
   render() {

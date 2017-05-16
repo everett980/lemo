@@ -3,11 +3,10 @@
 }
 
 .btn-disabled-true {
-  opacity: 0.65; 
+  opacity: 0.65;
   cursor: not-allowed;
 }
 
 .button_w {
   text-align: center;
 }
-

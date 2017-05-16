@@ -7,19 +7,20 @@ var io = require('socket.io')(http);
 
 app.use('/socketConfig.js', express.static(__dirname+'/socketConfig.js'));
 app.use('/public', express.static(path.normalize(__dirname+'/../public')));
+
 app.use('/static', express.static(path.normalize(__dirname+'/../build/static')));
 app.use('/node_modules', express.static(path.normalize(__dirname+'/../node_modules')));
 app.use('/browser', express.static(path.normalize(__dirname+'/../browser')));
 
 app.get('/', function(req, res, next) {
-  res.sendFile(path.normalize(__dirname+'/../build/index.html'));
+  console.log('getting the home page')
+  res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
 });
 
 let numPlayers = 0;
 let playerIds = [];
 let resultsArray = [];
 let currentPlayer = 0;
-
 
 io.on('connection', function(socket) {
   ++numPlayers;
